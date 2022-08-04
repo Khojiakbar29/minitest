@@ -22,3 +22,11 @@
     text-align: center;
     font-family: 'Edu VIC WA NT Beginner', cursive;
 }
+
+.active {
+    display: block;
+}
+
+.notactive {
+    display: none;
+}

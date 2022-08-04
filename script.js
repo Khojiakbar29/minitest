@@ -1,5 +1,9 @@
 function mainFunction () {
     let userName = '';
+    const allbuttons = document.querySelector('#allbuttons')
+    const buttonYes = document.querySelector('#buttonYES');
+    const buttonNo = document.querySelector('#buttonNO');
+
     function nameIdentify() {
         userName = prompt("Please, enter your name?", '');
 
@@ -36,6 +40,8 @@ function mainFunction () {
             t = setTimeout(add, 1000);
             if (sec == 0) {
                 clearTimeout(t);
+                allbuttons.classList.remove('notactive');
+                allbuttons.classList.add('active');
             }
         }
         timer();
@@ -43,8 +49,6 @@ function mainFunction () {
     }
     
     setTimeout(changeState, 7000);
-
-
 
 }
 
