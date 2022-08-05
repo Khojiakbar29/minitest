@@ -1,16 +1,47 @@
 function mainFunction () {
     let userName = '';
-    const allbuttons = document.querySelector('#allbuttons')
-    const buttonYes = document.querySelector('#buttonYES');
-    const buttonNo = document.querySelector('#buttonNO');
+    let counterAll = 0;
+    let order = 0;
+
+    const allbuttons = document.querySelector('#allbuttons'),
+          buttonYes = document.querySelector('#btnY'),
+          buttonNo = document.querySelector('#btnN'),
+          username = document.getElementById('username'),
+          maintext = document.getElementById('maintext');
+
+    let questions = [
+        [' 5 < 3 ? '], 
+        [' 5 + 10 * 2 = 30 ? '],
+        [' 0 * 1 = 1 ? '],
+        [' 32 / 2 = 16 ? '],
+        [' John is "he" ? '],
+        [' Anna is "his" ? '],
+        [' The capital of China is "Shanhai" ? '],
+        [' 25 * 3 + 15 / 3 = 85 ? '],
+        [' 15 > 8 ? '],
+        [' Did you like this test ? ']
+    ];
+
+    let answers = [
+        ['No'],
+        ['No'],
+        ['No'],
+        ['Yes'],
+        ['Yes'],
+        ['No'],
+        ['No'],
+        ['No'],
+        ['Yes'],
+        ['Yes']
+    ];
 
     function nameIdentify() {
         userName = prompt("Please, enter your name?", '');
 
         if (userName) {
-            document.getElementById('username').innerHTML = `${userName}, nice to see you`;
+            username.innerHTML = `${userName}, nice to see you`;
         } else if (userName == null || userName == '') {
-            document.getElementById('username').innerHTML = `Please enter your name :)`;
+            username.innerHTML = `Please enter your name :)`;
         }
     }
 
@@ -18,10 +49,10 @@ function mainFunction () {
 
     if (userName != undefined) {
         let changeStatus = function() {
-            document.getElementById('maintext').innerHTML = `Are you ready, ${userName}?`; 
+            maintext.innerHTML = `Are you ready, ${userName}?`; 
         };
 
-        setTimeout(changeStatus, 8000);
+        setTimeout(changeStatus, 10000);
 
     }
 
@@ -33,7 +64,7 @@ function mainFunction () {
         }
         function add() {
             tick();
-            document.getElementById('username').innerHTML = `Test will start in ${sec}`;
+            username.innerHTML = `Test will start in ${sec}`;
             timer();
         }
         function timer() {
@@ -42,14 +73,67 @@ function mainFunction () {
                 clearTimeout(t);
                 allbuttons.classList.remove('notactive');
                 allbuttons.classList.add('active');
+                questionsAppear(questions);
             }
         }
         timer();
         
     }
     
-    setTimeout(changeState, 7000);
+    setTimeout(changeState, 9000);
 
+    function questionsAppear(ques) {
+        username.innerHTML = `${userName} think about it :)`;
+        maintext.innerHTML = `${ques[0]}`; 
+    }
+
+    function orderFor() {
+        order += 1;
+    }
+
+    function triggerYes(ans) {
+        if (ans[order - 1] == 'Yes') {
+            counterAll += 10;
+        }
+    }
+
+    function triggerNo(ans) {
+        if (ans[order - 1] == 'No') {
+            counterAll += 10;
+        }
+    }
+
+    buttonYes.addEventListener('click', () => {
+        orderFor();
+        if (order <= 9) {
+            maintext.innerHTML = `${questions[order]}`;
+            triggerYes(answers);
+        } else if (order == 10) {
+            triggerYes(answers);
+            maintext.innerHTML = `${userName}, your score is ${counterAll} from 100`;
+            allbuttons.classList.remove('active');
+            username.innerHTML = 'Thank You!'; 
+        }
+    });
+
+    buttonNo.addEventListener('click', () => {
+        orderFor();
+        if (order <= 9) {
+            maintext.innerHTML = `${questions[order]}`;
+            triggerNo(answers);
+        } else if (order == 10) {
+            triggerNo(answers);
+            maintext.innerHTML = `${userName}, your score is ${counterAll} from 100`; 
+            allbuttons.classList.remove('active');
+            username.innerHTML = 'Thank You!'; 
+        }
+    });
+
+    
 }
 
 mainFunction();
+
+
+
+
